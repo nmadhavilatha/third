@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="third-test-suite.xml" />
+	<munit:test name="third-test-suite-thirdFlowTest" doc:id="c72dd2f0-3106-40ae-bb01-19d477aa2a3e" description="Test">
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy" doc:id="c631f13b-980a-4661-b65c-d5d7e0640c08" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f3a73405-24ff-47ef-8beb-444e9260b5d8" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert-equals doc:name="Assert equals" doc:id="8d63ef52-73b5-4701-9fa0-4f4f6e7d7884" actual="#[payload.stepResults[0].successfulRecords]" expected="#[4]" message="#['oops!the failured records in Batch Step1']"/>
+					<munit-tools:assert-equals doc:name="Assert equals" doc:id="20734777-80d2-4d80-a596-5fc0b16cfc9d" actual="#[payload.successfulRecords]" expected="#[10]" message="#['oops the failure records in batch step1']"/>
+				</munit-tools:before-call>
+			</munit-tools:spy>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to thirdFlow" doc:id="67d1139a-0d29-49ec-8eee-4eb1eefd5ec2" name="thirdFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="214b32be-cdcd-4069-a9c3-ff678a4daf4e" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f3a73405-24ff-47ef-8beb-444e9260b5d8" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="third-test-suite-thirdFlowTest1" doc:id="35dd4c22-54be-40fa-a917-1ab2ccb08c6a" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to thirdFlow" doc:id="6e4dae0a-8f99-4b74-8920-3f6c43afadd7" name="thirdFlow"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>
